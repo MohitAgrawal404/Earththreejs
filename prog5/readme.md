@@ -6,11 +6,7 @@ Run this followed commands:
 
 ``` bash
 # Install dependencies (only the first time)
-npm install
+npm install --save three
+npm install --save-dev vite
 
-# Run the local server at localhost:8080
-npm run dev
-
-# Build for production in the dist/ directory
-npm run build
-```
+npx vite
