@@ -19,7 +19,7 @@ const scene = new THREE.Scene();
  */
 
 const gltfLoader = new GLTFLoader();
-gltfLoader.load("/models/Earth/Earth.glb", (gltf) => {
+gltfLoader.load("/models/Earth/Earth1.glb", (gltf) => {
   scene.add(gltf.scene.children[0]);
 });
 /**
@@ -35,27 +35,24 @@ const floor = new THREE.Mesh(
 );
 floor.receiveShadow = true;
 floor.rotation.x = -Math.PI * 0.5;
+
 //scene.add(floor);
 
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 2.0);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.4);
-// directionalLight.castShadow = true;
-// directionalLight.shadow.mapSize.set(1024, 1024);
-// directionalLight.shadow.camera.far = 15;
-// directionalLight.shadow.camera.left = -7;
-// directionalLight.shadow.camera.top = 7;
-// directionalLight.shadow.camera.right = 7;
-// directionalLight.shadow.camera.bottom = -7;
+THREE.PCFSoftShadowMap;
+directionalLight.castShadow = true;
+gltfLoader.castShadow = true;
+gltfLoader.receiveShadow = true;
 directionalLight.position.set(15, 15, 15);
 scene.add(directionalLight);
 
 const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.4);
-
 directionalLight2.position.set(-15, -15, -15);
 scene.add(directionalLight2);
 
@@ -109,6 +106,10 @@ renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.setSize(sizes.width, sizes.height);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1;
+renderer.outputEncoding = THREE.sRGBEncoding;
+renderer.setRenderTarget;
 
 /**
  * Animate
@@ -125,6 +126,7 @@ const tick = () => {
   controls.update();
 
   // Render
+
   renderer.render(scene, camera);
 
   // Call tick again on the next frame
