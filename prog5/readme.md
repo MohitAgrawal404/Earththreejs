@@ -8,5 +8,4 @@ Run this followed commands:
 # Install dependencies (only the first time)
 npm install --save three
 npm install --save-dev vite
-
 npx vite

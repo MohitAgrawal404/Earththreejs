@@ -22,6 +22,13 @@ const gltfLoader = new GLTFLoader();
 gltfLoader.load("/models/Earth/Earth1.glb", (gltf) => {
   scene.add(gltf.scene.children[0]);
 });
+
+const gltfLoader2 = new GLTFLoader();
+gltfLoader2.load("/models/Earth/moon.glb", (gltf) => {
+  gltf.scene.scale.set(0.002, 0.002, 0.002);
+  scene.add(gltf.scene.children[0]);
+});
+
 /**
  * Floor
  */
@@ -49,6 +56,8 @@ THREE.PCFSoftShadowMap;
 directionalLight.castShadow = true;
 gltfLoader.castShadow = true;
 gltfLoader.receiveShadow = true;
+gltfLoader2.castShadow = true;
+gltfLoader2.receiveShadow = true;
 directionalLight.position.set(15, 15, 15);
 scene.add(directionalLight);
 
