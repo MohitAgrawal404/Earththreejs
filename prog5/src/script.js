@@ -25,7 +25,7 @@ gltfLoader.load("/models/Earth/Earth1.glb", (gltf) => {
 
 const gltfLoader2 = new GLTFLoader();
 gltfLoader2.load("/models/Earth/moon.glb", (gltf) => {
-  gltf.scene.scale.set(0.002, 0.002, 0.002);
+  //gltf.scene.scale.set(0.002, 0.002, 0.002);
   scene.add(gltf.scene.children[0]);
 });
 
@@ -48,7 +48,7 @@ floor.rotation.x = -Math.PI * 0.5;
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 1.5);
+const ambientLight = new THREE.AmbientLight(0xffffff, 1.0);
 scene.add(ambientLight);
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.4);
@@ -61,9 +61,23 @@ gltfLoader2.receiveShadow = true;
 directionalLight.position.set(15, 15, 15);
 scene.add(directionalLight);
 
+// const axesHelper = new THREE.AxesHelper(5);
+// scene.add(axesHelper);
+
 const directionalLight2 = new THREE.DirectionalLight(0xffffff, 1.4);
 directionalLight2.position.set(-15, -15, -15);
 scene.add(directionalLight2);
+
+const pointLight = new THREE.PointLight(0xff0019, 2.0, 1.0);
+pointLight.position.set(-0.95, 0.2, -0.98);
+
+// const geometry = new THREE.SphereGeometry(0.1, 32, 16);
+// const material = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+// const sphere = new THREE.Mesh(geometry, material);
+// sphere.position.set(-0.9, 0.2, -0.95);
+// scene.add(sphere);
+
+scene.add(pointLight);
 
 /**
  * Sizes
