@@ -1,30 +1,34 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
-import GUI from "lil-gui";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-
+//We followed tutorials by Bruno Simon's three.js journey to help me with some of this code
+//All blender models were made by us with various tutorials on blender found on youtube to help us 
 /**
  * Base
  */
-// Debug
-const gui = new GUI();
+
 
 // Canvas
 const canvas = document.querySelector("canvas.webgl");
 
 // Scene
 const scene = new THREE.Scene();
+let mixer = null;
 /**
  * Models
  */
 
 const gltfLoader = new GLTFLoader();
-gltfLoader.load("/models/Earth/Earth1.glb", (gltf) => {
-  scene.add(gltf.scene.children[0]);
+gltfLoader.load("models/Earth/Earthanimated.glb", (gltf) => {
+  console.log(gltf);
+  mixer = new THREE.AnimationMixer(gltf.scene);
+  const action = mixer.clipAction(gltf.animations[0]);
+  action.play();
+  scene.add(gltf.scene);
 });
 
 const gltfLoader2 = new GLTFLoader();
-gltfLoader2.load("/models/Earth/moon.glb", (gltf) => {
+gltfLoader2.load("models/Earth/moon.glb", (gltf) => {
   //gltf.scene.scale.set(0.002, 0.002, 0.002);
   scene.add(gltf.scene.children[0]);
 });
@@ -144,6 +148,11 @@ const tick = () => {
   const elapsedTime = clock.getElapsedTime();
   const deltaTime = elapsedTime - previousTime;
   previousTime = elapsedTime;
+
+  //Mixer
+  if (mixer != null) {
+    mixer.update(deltaTime);
+  }
 
   // Update controls
   controls.update();
